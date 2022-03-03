@@ -42,7 +42,7 @@ export const MenuOptionsContainer = styled.div`
 `;
 
 export const Option = styled.div`
-    display: inline-flex;
+    display: flex;
     width: 100%;
     text-align: center;
     margin: auto;
@@ -59,8 +59,9 @@ export const Option = styled.div`
         }
     }
 
-        h5 {
-            margin: 1.25rem auto;
-            color: #637381;
-        }
+    h5 {
+        margin: 1.25rem auto;
+        color: #637381;
+    }
+    
 `;

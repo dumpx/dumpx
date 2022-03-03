@@ -7,8 +7,7 @@ const MenuOptions = () => {
   const options = [
     { component: 'Home', title: 'Dashboard' },
     { component: 'AccountCircle', title: 'User' },
-    { component: 'Login', title: 'Login' },
-    { component: 'Input', title: 'Register' }
+    { component: 'Input', title: 'Register Bin' }
   ]
 
   return (
