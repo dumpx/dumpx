@@ -1,34 +1,80 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import binImage from "../assets/recycle-bin.png";
-import {AuthPage} from './styles';
+import {
+    AuthPage,
+    AuthFrame,
+    LoginForm,
+    RegisterShortcut,
+    HRLine,
+    GoogleButton,
+    FormHeading,
+    LogoImageDiv,
+    LogoImage,
+} from "./styles";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Authenticaton = () => {
+    const dispatch = useDispatch();
+    const [isValid, setIsValid] = useState(true);
+
+    const usernameRef = useRef(null);
+    const passwordRef = useRef(null);
+
+    const loginHandler = (e) => {
+        e.preventDefault();
+        if (
+            usernameRef.current.value === "" ||
+            passwordRef.current.value === ""
+        ) {
+            setIsValid(false);
+            return;
+        }
+        dispatch({ type: "LOGIN" });
+    };
+
+    console.log(isValid);
+
     return (
         <AuthPage>
-            <div className="auth-frame">
-                <div className="heading">
-                    <div className="logo-image-div">
-                        <img src={binImage} className="logo-image" alt="logo" />
-                    </div>
-                    <h2 className="logo-name">DUMPX</h2>
-                    <p className="tagline">Make it work !</p>
-                </div>
-                <form className="login-form">
-                    <input type="text" name="username" id="username" placeholder="Enter Username"/>
-                    <input type="password" name="password" id="password" placeholder="Enter Password"/>
-                    <input type="button" value="Login" />
-                </form>
-                <div className="horizontal-line">OR</div>
+            <AuthFrame>
+                <FormHeading>
+                    <LogoImageDiv>
+                        <LogoImage src={binImage} alt="logo" />
+                    </LogoImageDiv>
+                    <h2>DUMPX</h2>
+                    <p>Make it work !</p>
+                </FormHeading>
+                <LoginForm onSubmit={loginHandler} isValid={isValid}>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        ref={usernameRef}
+                        placeholder="Enter Username"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        ref={passwordRef}
+                        placeholder="Enter Password"
+                    />
+                    <input type="submit" value="Login" onClick={loginHandler} />
+                </LoginForm>
+                <HRLine>OR</HRLine>
                 <div className="context-switch">
-                    <button type="submit" className="submit-btn">Continue with Google</button>
+                    <GoogleButton>Continue with Google</GoogleButton>
                 </div>
-                <div className="register-shortcut">
-                    <div className="create-account-text">
+                <RegisterShortcut>
+                    <div>
                         <p>Don't have an account ?</p>
                     </div>
-                    <a href="http://localhost:3000" className="create-account-link">Create an account</a>
-                </div>
-            </div>
+                    <Link to="/signup" className="create-account-link">
+                        Create an account
+                    </Link>
+                </RegisterShortcut>
+            </AuthFrame>
         </AuthPage>
     );
 };

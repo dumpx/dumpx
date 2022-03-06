@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
 export const DashboardContainer = styled.div`
-    /* display: flex; */
     width: 75vw;
-    /* flex-direction: column; */
     margin:  1rem ;
 `;
 
