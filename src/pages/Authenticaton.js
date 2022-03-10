@@ -14,6 +14,8 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import { authActions } from "../store/reducers/auth";
+
 const Authenticaton = () => {
     const dispatch = useDispatch();
     const [isValid, setIsValid] = useState(true);
@@ -30,10 +32,9 @@ const Authenticaton = () => {
             setIsValid(false);
             return;
         }
-        dispatch({ type: "LOGIN" });
+        // dispatch({ type: "LOGIN" });
+        dispatch(authActions.login());
     };
-
-    console.log(isValid);
 
     return (
         <AuthPage>

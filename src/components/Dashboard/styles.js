@@ -1,54 +1,74 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const DashboardContainer = styled.div`
-    width: 75vw;
-    margin:  1rem ;
+    width: 100%;
+    min-height: 100vh;
 `;
 
-export const SearchPanelContainer = styled.div`
+export const DashBoardHeader = styled.header`
     width: 100%;
-    margin: auto ;
-    background-color: #C8FACD;
-    border-radius: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #aaa;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
 
+export const DashboardHeaderLeft = styled.div`
+    width: 5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 
-    form {
-        padding: 1rem;
-        border-radius: 1rem;
+export const DashboardHeaderRight = styled.div`
+    width: 5rem;
+    text-align: center;
+`;
 
-        input {
-            width: 50%;
-            outline: none;
-            border: 2px solid #E6E9EB;
-            padding:.25rem;
-            font-family: inherit;
-            border-radius: 0.5rem;
-         
-        }
-
-        button {
-            background-color: grey;
-            width: max-content;
-            border:none;
-            outline:none;
-            font-family: inherit;
-            padding : 0.25rem;
-            border-radius: 0.25rem;
-            color: white;
+export const DashboardHeaderSearch = styled.form`
+    input[type="text"],
+    input[type="submit"] {
+        outline: none;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        margin: 0 0.25rem;
+    }
+    input[type="text"] {
+        width: 20rem;
+    }
+    input[type="submit"] {
+        background: #00ab55;
+        border:none;
+        color: #fff;
+        :hover {
+            cursor: pointer;
         }
     }
 `;
 
-export const CardsContainer = styled.div`
-    display: flex;
-    justify-content: space-evenly;
+export const HeaderLogo = styled.img`
+    width: 2rem;
+    height: 2rem;
+    background: cadetblue;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
 `;
 
-export const Card = styled.div`
-    /* display: flex; */
-    width: 16vw;
-    border-radius: 0.75rem;
-    padding: 1rem;
-    text-align: center;
-    /* justify-content: space-evenly; */
+export const LogoutButton = styled.button`
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    background: #f00;
+    color: #fff;
+
+    :hover {
+        cursor: pointer;
+    }
 `;

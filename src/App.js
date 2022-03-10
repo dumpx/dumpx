@@ -1,37 +1,42 @@
-import { Fragment } from "react";
 import "./App.css";
+
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Error from "./pages/Error";
-import Register from "./pages/Register";
 import Authenticaton from "./pages/Authenticaton";
+import Header from "./components/Dashboard/Header";
+import { DashboardContainer } from "./components/Dashboard/styles";
+import Section from "./components/Section";
+
+// import Home from "./pages/Home";
+// import Register from "./pages/Register";
+// import Error from "./pages/Error";
+
 import { useSelector } from "react-redux";
-import Sidebar from "./components/Sidebar/index";
-import { DashboardContainer} from "./components/Dashboard/styles";
 
 function App() {
-    const isLoggedIn = useSelector((state) => state.loggedIn);
-    console.log("Logged in ? : ", isLoggedIn);
+    const isLoggedIn = useSelector(
+        (state) => state.authSliceReducer.isLoggedIn
+    );
+    console.log("Logged In : ", isLoggedIn);
 
     return (
-        <Fragment>
-            {!isLoggedIn && (
+        <>
+            {isLoggedIn && (
                 <Routes>
-                    <Route path="/" element={<Authenticaton />} />
-                    <Route path="/:id" element={<Error />} />
+                    <Route path="*" element={<Authenticaton />} />
                 </Routes>
             )}
-            {isLoggedIn && (
+            {!isLoggedIn && (
                 <DashboardContainer>
-                    <Sidebar />
-                    <Routes>
+                    <Header />
+                    <Section />
+                    {/* <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/:id" element={<Error />} />
-                    </Routes>
+                        <Route path="/:others" element={<Error />} />
+                    </Routes> */}
                 </DashboardContainer>
             )}
-        </Fragment>
+        </>
     );
 }
 
