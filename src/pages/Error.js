@@ -1,15 +1,17 @@
-import React from 'react'
+import React from "react";
+import styled from "styled-components";
+
+const FoF = styled.h2`
+  text-align : center;
+  font-family: Monospace;
+`;
 
 const Error = () => {
-  return (
-    <h2 style={{
-      display: 'flex',
-      justifyContent: 'center',
-      textAlign: 'center'
-    }}>
-      404 Error, page not found
-    </h2 >
-  )
-}
+    return <>
+      <div className="container">
+        <FoF>404</FoF>
+      </div>
+    </>;
+};
 
 export default Error;

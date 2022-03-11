@@ -1,30 +1,42 @@
-import { Fragment } from "react";
 import "./App.css";
-import Sidebar from "./components/Sidebar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Error from "./pages/Error";
-import Register from "./pages/Register";
+
+import { Routes, Route } from "react-router-dom";
 import Authenticaton from "./pages/Authenticaton";
+import Header from "./components/Dashboard/Header";
+import { DashboardContainer } from "./components/Dashboard/styles";
+import Section from "./components/Section";
+
+// import Home from "./pages/Home";
+// import Register from "./pages/Register";
+// import Error from "./pages/Error";
+
+import { useSelector } from "react-redux";
 
 function App() {
+    const isLoggedIn = useSelector(
+        (state) => state.authSliceReducer.isLoggedIn
+    );
+    console.log("Logged In : ", isLoggedIn);
+
     return (
-        <Fragment>
-            <div className="app--display">
-                <Router>
-                    <Sidebar />
-                    <Routes>
+        <>
+            {isLoggedIn && (
+                <Routes>
+                    <Route path="*" element={<Authenticaton />} />
+                </Routes>
+            )}
+            {!isLoggedIn && (
+                <DashboardContainer>
+                    <Header />
+                    <Section />
+                    {/* <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/register" element={<Register />} />
-                        <Route
-                            path="/authentication"
-                            element={<Authenticaton />}
-                        />
-                        <Route path="/:id" element={<Error />} />
-                    </Routes>
-                </Router>
-            </div>
-        </Fragment>
+                        <Route path="/:others" element={<Error />} />
+                    </Routes> */}
+                </DashboardContainer>
+            )}
+        </>
     );
 }
 
