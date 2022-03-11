@@ -14,7 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { authActions } from "../store/reducers/auth";
+import { login } from "../store/reducers/auth";
 
 const Authenticaton = () => {
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const Authenticaton = () => {
             return;
         }
         // dispatch({ type: "LOGIN" });
-        dispatch(authActions.login());
+        dispatch(login());
     };
 
     return (
