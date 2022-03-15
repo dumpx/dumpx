@@ -14,7 +14,6 @@ a {
 }
 
 .create-account-link {
-<<<<<<< HEAD
   color: #448f44;
   transition: all 0.3s ease-in-out;
 }
@@ -22,12 +21,3 @@ a {
 .create-account-link:hover {
   text-decoration: wavy;
 }
-=======
-    color: #448f44;
-    transition: all 0.3s ease-in-out;
-}
-
-.create-account-link:hover {
-    text-decoration: wavy;
-}
->>>>>>> dfb4df292fdaa606d2cf29a1f0781ff363ff5220
