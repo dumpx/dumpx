@@ -7,8 +7,8 @@ const Home = () => {
     return (
         <Fragment>
             <HomeContainer>
-                {/* <MapPopup /> */}
                 <h1>Home Page dashboard</h1>
+                <MapPopup />
             </HomeContainer>
         </Fragment>
     )

@@ -13,19 +13,17 @@ import Section from "./components/Section";
 import { useSelector } from "react-redux";
 
 function App() {
-    const isLoggedIn = useSelector(
-        (state) => state.authSliceReducer.isLoggedIn
-    );
+    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
     console.log("Logged In : ", isLoggedIn);
 
     return (
         <>
-            {isLoggedIn && (
+            {!isLoggedIn && (
                 <Routes>
                     <Route path="*" element={<Authenticaton />} />
                 </Routes>
             )}
-            {!isLoggedIn && (
+            {isLoggedIn && (
                 <DashboardContainer>
                     <Header />
                     <Section />

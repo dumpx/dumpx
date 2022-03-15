@@ -10,7 +10,7 @@ import {
 import binImage from "../../assets/bin.png";
 
 import { useDispatch } from "react-redux";
-import { authActions } from "../../store/reducers/auth";
+import { logout } from "../../store/reducers/auth";
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Header = () => {
     };
 
     const logoutHandler = () => {
-        dispatch(authActions.logout());
+        dispatch(logout());
         console.log("LOGGING OUT ...");
     };
 

@@ -6,16 +6,27 @@ const Form = () => {
 
     const [formData, setFormData] = useState('');
 
-    const createPost = async () => {
-        await supabase
-            .from('dumpx')
-            .insert(formData)
-    };
+    // const createPost = async () => {
+    //     await supabase
+    //         .from('dumpx')
+    //         .insert(formData)
+    // };
+
+    const createPost = async (e) => {
+
+        e.preventDefault();
+
+        const { data, error } = await supabase
+            .from('bin-data')
+            .insert([
+                { bin_code: formData, bin_location: 'Bangalore', description: 'blah', lattitude: '12', longitude: '121' },
+            ])
+    }
 
     return (
         <Fragment>
             <FormContainer>
-                <form onSubmit={createPost}>
+                <form onSubmit={e => createPost(e)}>
                     <label htmlFor="bin-code" >
                         <h3>Enter Bin Code</h3>
                         <input
