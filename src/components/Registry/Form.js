@@ -6,12 +6,6 @@ const Form = () => {
 
     const [formData, setFormData] = useState('');
 
-    // const createPost = async () => {
-    //     await supabase
-    //         .from('dumpx')
-    //         .insert(formData)
-    // };
-
     const createPost = async (e) => {
 
         e.preventDefault();
@@ -19,8 +13,14 @@ const Form = () => {
         const { data, error } = await supabase
             .from('bin-data')
             .insert([
-                { bin_code: formData, bin_location: 'Bangalore', description: 'blah', lattitude: '12', longitude: '121' },
+                { bincode: '1414', binLocation: 'Bangalore', description: 'blah', lattitude: 12, longitude: 121 },
             ])
+
+        if (error) {
+            alert(error.error_description || error.message)
+        }
+
+        console.log(`inserted`);
     }
 
     return (
