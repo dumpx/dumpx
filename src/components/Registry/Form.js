@@ -13,7 +13,7 @@ const Form = () => {
         const { data, error } = await supabase
             .from('bin-data')
             .insert([
-                { bincode: '1414', binLocation: 'Bangalore', description: 'blah', lattitude: 12, longitude: 121 },
+                { bincode: Math.random(1000, 9999), binLocation: formData, description: 'blah', lattitude: Math.random(1, 180), longitude: Math.random(1, 180) },
             ])
 
         if (error) {
