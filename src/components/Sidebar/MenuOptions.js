@@ -1,6 +1,7 @@
 import { React } from "react";
 import { NavLink } from "react-router-dom";
-import { MenuOptionsContainer, Option } from "./styles";
+import { MenuOptionsContainer } from "./styles";
+import './styles.scss';
 // import Home from '@mui/icons-material/Home'
 
 const MenuOptions = () => {
@@ -18,7 +19,7 @@ const MenuOptions = () => {
                         <NavLink
                             key={index}
                             className={(navData) =>
-                                navData.isActive ? "active-router" : Option
+                                navData.isActive ? "active" : "router"
                             }
                             to={item.path}
                         >

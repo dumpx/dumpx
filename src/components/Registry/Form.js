@@ -1,67 +1,80 @@
-import React, { Fragment, useState } from 'react'
-import { FormContainer } from './styles'
-import { supabase } from '../../client'
+import React, { Fragment, useState } from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { FormContainer } from "./styles";
+import FormControl from "@mui/material/FormControl";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import FormHelperText from "@mui/material/FormHelperText";
+
+import { supabase } from "../../client";
 
 const Form = () => {
-
-    const [formData, setFormData] = useState('');
+    const [formData, setFormData] = useState("");
 
     const createPost = async (e) => {
-
         e.preventDefault();
 
-        const { data, error } = await supabase
-            .from('bin-data')
-            .insert([
-                { bincode: Math.random(1000, 9999), binLocation: formData, description: 'blah', lattitude: Math.random(1, 180), longitude: Math.random(1, 180) },
-            ])
+        const { data, error } = await supabase.from("bin-data").insert([
+            {
+                bincode: Math.random(1000, 9999),
+                binLocation: formData,
+                description: "blah",
+                lattitude: 100,
+                longitude: 100,
+            },
+        ]);
 
         if (error) {
-            alert(error.error_description || error.message)
+            alert(error.error_description || error.message);
+        } else {
+            console.log(data);
         }
 
         console.log(`inserted`);
-    }
+    };
 
     return (
         <Fragment>
             <FormContainer>
-                <form onSubmit={e => createPost(e)}>
-                    <label htmlFor="bin-code" >
+                <form onSubmit={createPost.bind()}>
+                    <label htmlFor="bin-code">
                         <h3>Enter Bin Code</h3>
                         <input
                             type="text"
-                            placeholder='bin code'
-                            onChange={(event) => setFormData(event.target.value)}
+                            placeholder="bin code"
+                            onChange={(event) =>
+                                setFormData(event.target.value)
+                            }
                             value={formData}
                         />
                     </label>
 
-                    <label htmlFor="bin-location" >
+                    <label htmlFor="bin-location">
                         <h3>Enter Bin Location</h3>
-                        <input type="text" placeholder='bin location' />
+                        <input type="text" placeholder="bin location" />
                     </label>
 
-                    <label htmlFor='desc'>
+                    <label htmlFor="desc">
                         <h3>Description</h3>
-                        <input type="text" placeholder='desc' />
+                        <input type="text" placeholder="desc" />
                     </label>
 
-                    <label htmlFor='latitude'>
+                    <label htmlFor="latitude">
                         <h3>Latitude</h3>
-                        <input type='number' placeholder='latitude' />
+                        <input type="number" placeholder="latitude" />
                     </label>
 
                     <label htmlFor="longitude">
                         <h3>Longitude</h3>
-                        <input type="number" placeholder='longitude' />
+                        <input type="number" placeholder="longitude" />
                     </label>
 
                     <button type="submit">Submit</button>
                 </form>
             </FormContainer>
         </Fragment>
-    )
-}
+    );
+};
 
-export default Form
+export default Form;

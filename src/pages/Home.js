@@ -8,7 +8,7 @@ const Home = () => {
         <Fragment>
             <HomeContainer>
                 <h1>Home Page dashboard</h1>
-                <MapPopup />
+                {/* <MapPopup /> */}
             </HomeContainer>
         </Fragment>
     )

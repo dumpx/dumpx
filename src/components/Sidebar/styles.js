@@ -38,32 +38,3 @@ export const MenuOptionsContainer = styled.nav`
     flex-direction: column;
     justify-content: center;
 `;
-
-export const Option = styled.a`
-    display: flex;
-    width: 100%;
-    text-align: center;
-    margin: auto;
-    padding: 1rem 1.5rem;
-
-    :hover {
-        background-color: #ebf8f2;
-        cursor: pointer;
-        border-right: 2px solid #00ab55;
-
-        h5 {
-            transform: scale(1.05);
-            color: #00ab55;
-        }
-    }
-
-    :focus {
-        background-color: #b1ffdb;
-        border-right: 2px solid #000000;
-    }
-
-    h5 {
-        margin: 1.25rem auto;
-        color: #637381;
-    }
-`;

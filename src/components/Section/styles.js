@@ -8,4 +8,8 @@ export const SectionContainer = styled.section`
     height: calc(100vh - 4rem - 1px);
 `;
 
-export const MainContainer = styled.main``;
+export const MainContainer = styled.main`
+    flex: 1;
+    height: 100%;
+    padding: 1rem;
+`;
