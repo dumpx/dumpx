@@ -45,7 +45,10 @@ export const DashboardHeaderSearch = styled.form`
         background: #00ab55;
         border:none;
         color: #fff;
+        transition: background 0.3s ease-in-out; 
+        
         :hover {
+            background: #00cc55;
             cursor: pointer;
         }
     }
@@ -67,8 +70,36 @@ export const LogoutButton = styled.button`
     font-size: 0.75rem;
     background: #f00;
     color: #fff;
+    transition: background 0.3s ease-in-out; 
 
     :hover {
         cursor: pointer;
+        background: #c00;
     }
+`;
+
+export const DashboardCard = styled.div`
+    display: flex;
+    flex-direction: column;
+    background: #00ab55;
+    border-radius: 0.8rem;
+    padding: 1rem 2rem;
+    row-gap: 0.5rem;
+    width: 12rem;
+    color: #fff;
+    background-image: linear-gradient(19deg,#266e7e 0%,#00ab55 100%);
+
+    h3{
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #dedede;
+    }
+
+    h2{
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #fff;
+    }
+
 `;

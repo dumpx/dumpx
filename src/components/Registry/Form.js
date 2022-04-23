@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { FormContainer } from "./styles";
-import FormControl from "@mui/material/FormControl";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
-import FormHelperText from "@mui/material/FormHelperText";
+// import Box from "@mui/material/Box";
+// import TextField from "@mui/material/TextField";
+import { FormContainer,  FormInput, FormBox, InputButton} from "./styles";
+// import FormControl from "@mui/material/FormControl";
+// import Input from "@mui/material/Input";
+// import InputLabel from "@mui/material/InputLabel";
+// import FormHelperText from "@mui/material/FormHelperText";
 
 import { supabase } from "../../client";
 
@@ -37,41 +37,41 @@ const Form = () => {
     return (
         <Fragment>
             <FormContainer>
-                <form onSubmit={createPost.bind()}>
+                <FormBox onSubmit={createPost.bind()}>
                     <label htmlFor="bin-code">
-                        <h3>Enter Bin Code</h3>
-                        <input
+                    Bin Code
+                    </label>
+                        <FormInput
                             type="text"
-                            placeholder="bin code"
+                            placeholder="Enter bin code"
                             onChange={(event) =>
                                 setFormData(event.target.value)
                             }
                             value={formData}
                         />
-                    </label>
 
                     <label htmlFor="bin-location">
-                        <h3>Enter Bin Location</h3>
-                        <input type="text" placeholder="bin location" />
+                         Bin Location
                     </label>
+                        <FormInput type="text" placeholder="Enter bin location" />
 
                     <label htmlFor="desc">
-                        <h3>Description</h3>
-                        <input type="text" placeholder="desc" />
+                        Description
                     </label>
+                        <FormInput type="text" placeholder="Description ..." />
 
                     <label htmlFor="latitude">
-                        <h3>Latitude</h3>
-                        <input type="number" placeholder="latitude" />
+                        Latitude
                     </label>
+                        <FormInput type="number" min="-90" max="90" placeholder="Enter latitude" />
 
                     <label htmlFor="longitude">
-                        <h3>Longitude</h3>
-                        <input type="number" placeholder="longitude" />
+                        Longitude
                     </label>
+                        <FormInput type="number" min="-180" max="180" placeholder="Enter longitude" />
 
-                    <button type="submit">Submit</button>
-                </form>
+                    <InputButton type="submit" value="Submit" />
+                </FormBox>
             </FormContainer>
         </Fragment>
     );

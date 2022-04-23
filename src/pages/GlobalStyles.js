@@ -6,4 +6,8 @@ export const HomeContainer = styled.div`
 
 export const RegisterContainer = styled.div`
     display: block;
+    h1{
+        text-align: center;
+        margin: 2rem auto;
+    }
 `;

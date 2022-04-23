@@ -4,12 +4,12 @@ import { RegisterContainer } from './GlobalStyles';
 
 const Register = () => {
     return (
-        <Fragment>
+        <>
             <RegisterContainer>
-                <h1>Register</h1>
+                <h1>Register a bin</h1>
                 <Registry />
             </RegisterContainer>
-        </Fragment>
+        </>
     )
 }
 

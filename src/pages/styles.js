@@ -135,3 +135,11 @@ export const RegisterShortcut = styled.div`
 export const CreateAccountText = styled.a`
     color: #008f26;
 `;
+
+export const DashboardHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 1rem;
+    align-items: center;
+`;

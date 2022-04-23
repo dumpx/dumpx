@@ -1,17 +1,26 @@
+import React, { Fragment } from "react";
+// import MapPopup from '../components/Map';
+import Card from "../components/Dashboard/Card";
 
-import React, { Fragment } from 'react'
-import MapPopup from '../components/Map';
-import { HomeContainer } from './GlobalStyles';
+import { HomeContainer } from "./GlobalStyles";
+import { DashboardHeader } from "./styles";
+import Map from "../assets/map.png";
 
 const Home = () => {
     return (
         <Fragment>
             <HomeContainer>
-                <h1>Home Page dashboard</h1>
                 {/* <MapPopup /> */}
+                <DashboardHeader>
+                    <Card title="Total bins" amount="3" />
+                    <Card title="Active bins" amount="5" />
+                    <Card title="Full bins" amount="1" />
+                    <Card title="Empty bins" amount="8" />
+                </DashboardHeader>
+                <img src={Map} alt="Logo" />
             </HomeContainer>
         </Fragment>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

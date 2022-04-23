@@ -28,6 +28,7 @@ const Header = () => {
         <DashBoardHeader>
             <DashboardHeaderLeft>
                 <HeaderLogo src={binImage}/>
+                <h3>DUMPX</h3>
             </DashboardHeaderLeft>
             <DashboardHeaderSearch onSubmit={searchSubmitHandler}>
                 <input
