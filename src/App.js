@@ -1,7 +1,8 @@
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
-import Authenticaton from "./pages/Authenticaton";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Header from "./components/Dashboard/Header";
 import { DashboardContainer } from "./components/Dashboard/styles";
 import Section from "./components/Section";
@@ -20,7 +21,10 @@ function App() {
         <>
             {!isLoggedIn && (
                 <Routes>
-                    <Route path="*" element={<Authenticaton />} />
+                    <Route path="/" element={<Login />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="signup" element={<Signup />} />
+                    <Route path="/:others" element={<Login />} />
                 </Routes>
             )}
             {isLoggedIn && (

@@ -1,76 +1,104 @@
 import React, { Fragment, useState } from "react";
-// import Box from "@mui/material/Box";
-// import TextField from "@mui/material/TextField";
-import { FormContainer,  FormInput, FormBox, InputButton} from "./styles";
-// import FormControl from "@mui/material/FormControl";
-// import Input from "@mui/material/Input";
-// import InputLabel from "@mui/material/InputLabel";
-// import FormHelperText from "@mui/material/FormHelperText";
+import { FormContainer, FormInput, FormBox, InputButton } from "./styles";
 
-import { supabase } from "../../client";
+import { supabase } from "../../supabase";
 
 const Form = () => {
-    const [formData, setFormData] = useState("");
+    const [binCode, setBinCode] = useState("");
+    const [location, setLocation] = useState("");
+    const [description, setDescription] = useState("");
+    const [lat, setLat] = useState("");
+    const [long, setLong] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const createPost = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
-        const { data, error } = await supabase.from("bin-data").insert([
+        const { data, error } = await supabase.from("Bins").insert([
             {
-                bincode: Math.random(1000, 9999),
-                binLocation: formData,
-                description: "blah",
-                lattitude: 100,
-                longitude: 100,
+                binCode: binCode,
+                binLocation: location,
+                description: description,
+                latitude: lat,
+                longitude: long,
             },
         ]);
 
         if (error) {
             alert(error.error_description || error.message);
         } else {
+            alert("Bin added successfully !");
             console.log(data);
         }
-
-        console.log(`inserted`);
+        setLoading(false);
+        clearForm();
     };
+
+    const clearForm = () => {
+        setBinCode("");
+        setLocation("");
+        setDescription("");
+        setLat("");
+        setLong("");
+    }
 
     return (
         <Fragment>
             <FormContainer>
-                <FormBox onSubmit={createPost.bind()}>
-                    <label htmlFor="bin-code">
-                    Bin Code
-                    </label>
-                        <FormInput
-                            type="text"
-                            placeholder="Enter bin code"
-                            onChange={(event) =>
-                                setFormData(event.target.value)
-                            }
-                            value={formData}
+                <FormBox onSubmit={createPost}>
+                    <label htmlFor="bin-code">Bin Code</label>
+                    <FormInput
+                        type="text"
+                        placeholder="Enter bin code"
+                        onChange={(event) => setBinCode(event.target.value)}
+                        value={binCode}
+                    />
+
+                    <label htmlFor="bin-location">Bin Location</label>
+                    <FormInput
+                        type="text"
+                        placeholder="Enter bin location"
+                        onChange={(event) => setLocation(event.target.value)}
+                        value={location}
+                    />
+
+                    <label htmlFor="desc">Description</label>
+                    <FormInput
+                        type="text"
+                        placeholder="Description ..."
+                        onChange={(event) => setDescription(event.target.value)}
+                        value={description}
+                    />
+
+                    <label htmlFor="latitude">Latitude</label>
+                    <FormInput
+                        type="number"
+                        min="-90"
+                        max="90"
+                        placeholder="Enter latitude"
+                        onChange={(event) => setLat(event.target.value)}
+                        value={lat}
+                    />
+
+                    <label htmlFor="longitude">Longitude</label>
+                    <FormInput
+                        type="number"
+                        min="-180"
+                        max="180"
+                        placeholder="Enter longitude"
+                        onChange={(event) => setLong(event.target.value)}
+                        value={long}
+                    />
+                    {loading ? (
+                        <InputButton value="submitting ..." />
+                    ) : (
+                        <InputButton
+                            type="submit"
+                            value="Submit"
+                            onClick={createPost}
                         />
-
-                    <label htmlFor="bin-location">
-                         Bin Location
-                    </label>
-                        <FormInput type="text" placeholder="Enter bin location" />
-
-                    <label htmlFor="desc">
-                        Description
-                    </label>
-                        <FormInput type="text" placeholder="Description ..." />
-
-                    <label htmlFor="latitude">
-                        Latitude
-                    </label>
-                        <FormInput type="number" min="-90" max="90" placeholder="Enter latitude" />
-
-                    <label htmlFor="longitude">
-                        Longitude
-                    </label>
-                        <FormInput type="number" min="-180" max="180" placeholder="Enter longitude" />
-
-                    <InputButton type="submit" value="Submit" />
+                    )}
                 </FormBox>
             </FormContainer>
         </Fragment>

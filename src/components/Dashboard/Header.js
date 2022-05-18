@@ -8,6 +8,7 @@ import {
     HeaderLogo,
 } from "./styles";
 import binImage from "../../assets/bin.png";
+import { supabase } from "../../supabase";
 
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/reducers/auth";
@@ -19,7 +20,8 @@ const Header = () => {
         console.log("Searched something ?");
     };
 
-    const logoutHandler = () => {
+    const logoutHandler = async () => {
+        await supabase.auth.signOut();
         dispatch(logout());
         console.log("LOGGING OUT ...");
     };

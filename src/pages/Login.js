@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { supabase } from "../supabase";
 import binImage from "../assets/recycle-bin.png";
 import {
     AuthPage,
@@ -16,14 +17,18 @@ import { useDispatch } from "react-redux";
 
 import { login } from "../store/reducers/auth";
 
-const Authenticaton = () => {
+const Login = () => {
     const dispatch = useDispatch();
     const [isValid, setIsValid] = useState(true);
 
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
 
-    const loginHandler = (e) => {
+    const failedLogin = (message) => {
+        alert(message);
+    };
+
+    const loginHandler = async (e) => {
         e.preventDefault();
         if (
             usernameRef.current.value === "" ||
@@ -32,9 +37,35 @@ const Authenticaton = () => {
             setIsValid(false);
             return;
         }
-        // dispatch({ type: "LOGIN" });
-        dispatch(login());
+        dispatch({ type: "LOGIN" });
+        let { user, error } = await supabase.auth.signIn({
+            email: "yadav.199302068@muj.manipal.edu",
+            password: "Password@123",
+        });
+
+        console.log(user, error);
+        if (error) {
+            failedLogin(error.message);
+            return;
+        }
+
+        const email = user.email;
+        dispatch(login(email));
     };
+
+    async function signInWithGoogle() {
+        const { user, session, error } = await supabase.auth.signIn({
+            provider: "google",
+        });
+        console.log(user, session, error);
+
+        if (error) {
+            failedLogin(error.message);
+            return;
+        }
+        const email = usernameRef.current.value;
+        dispatch(login(email));
+    }
 
     return (
         <AuthPage>
@@ -65,7 +96,9 @@ const Authenticaton = () => {
                 </LoginForm>
                 <HRLine>OR</HRLine>
                 <div className="context-switch">
-                    <GoogleButton>Continue with Google</GoogleButton>
+                    <GoogleButton onClick={signInWithGoogle}>
+                        Continue with Google
+                    </GoogleButton>
                 </div>
                 <RegisterShortcut>
                     <div>
@@ -80,4 +113,4 @@ const Authenticaton = () => {
     );
 };
 
-export default Authenticaton;
+export default Login;
