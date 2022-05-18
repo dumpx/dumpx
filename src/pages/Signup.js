@@ -33,17 +33,20 @@ const Signup = () => {
             passwordRef.current.value !== cPasswordRef.current.value
         ) {
             setIsValid(false);
+            alert("Password did not match !");
             return;
         }
-        // dispatch({ type: "LOGIN" });
-        // let { user, error } = await supabase.auth.signIn({
-        //     email: "yadav.199302068@muj.manipal.edu",
-        //     password: "Password@123",
-        // });
+        let { user, error } = await supabase.auth.signUp({
+            email: usernameRef.current.value,
+            password: passwordRef.current.value
+        })
 
-        // console.log(user, error);
-        // dispatch(login());
-        const email = usernameRef.current.value;
+        if(error){
+            alert("Failed to sign up!");
+            return;
+        }
+  
+        const email = user.email;
         dispatch(login(email));
     };
 

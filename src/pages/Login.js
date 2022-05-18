@@ -37,7 +37,7 @@ const Login = () => {
             setIsValid(false);
             return;
         }
-        dispatch({ type: "LOGIN" });
+        // dispatch({ type: "LOGIN" });
         let { user, error } = await supabase.auth.signIn({
             email: "yadav.199302068@muj.manipal.edu",
             password: "Password@123",

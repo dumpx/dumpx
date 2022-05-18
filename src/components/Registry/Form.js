@@ -15,6 +15,12 @@ const Form = () => {
         e.preventDefault();
         setLoading(true);
 
+        if(!binCode.trim() || !location.trim()|| !description.trim()|| !lat.trim()|| !long.trim()){
+            alert("Please enter data correctly !");
+            setLoading(false);
+            return;
+        }
+
         const { data, error } = await supabase.from("Bins").insert([
             {
                 binCode: binCode,

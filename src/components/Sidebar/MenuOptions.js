@@ -7,7 +7,8 @@ import './styles.scss';
 const MenuOptions = () => {
     const options = [
         { component: "Home", title: "Dashboard", path: "/" },
-        { component: "AccountCircle", title: "User", path: `user` },
+        // { component: "AccountCircle", title: "User", path: `user` },
+        { component: "AccountCircle", title: "Bins", path: `bins` },
         { component: "Input", title: "Register", path: "register" },
     ];
 

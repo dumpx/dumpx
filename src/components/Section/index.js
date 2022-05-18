@@ -7,6 +7,7 @@ import Sidebar from "../Sidebar";
 import Home from "../../pages/Home";
 import Error from "../../pages/Error";
 import Register from "../../pages/Register";
+import Bins from "../../pages/Bins";
 
 const Index = () => {
     console.log("Main");
@@ -17,6 +18,7 @@ const Index = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/bins" element={<Bins />} />
                     <Route path="/:others" element={<Error />} />
                 </Routes>
             </MainContainer>
