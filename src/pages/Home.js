@@ -7,6 +7,8 @@ import { DashboardHeader } from "./styles";
 // import Map from "../assets/map.png";
 
 const Home = () => {
+
+    const position=[26.8439, 75.5652];
     return (
         <Fragment>
             <HomeContainer>
@@ -16,7 +18,7 @@ const Home = () => {
                     <Card title="Full bins" amount="1" />
                     <Card title="Empty bins" amount="8" />
                 </DashboardHeader>
-                <Map  />
+                <Map position={position} />
                 {/* <img src={Map} alt="Logo" /> */}
             </HomeContainer>
         </Fragment>

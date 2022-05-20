@@ -23,8 +23,8 @@ const Form = () => {
 
         const { data, error } = await supabase.from("Bins").insert([
             {
-                binCode: binCode,
-                binLocation: location,
+                code: binCode,
+                location: location,
                 description: description,
                 latitude: lat,
                 longitude: long,
@@ -35,10 +35,10 @@ const Form = () => {
             alert(error.error_description || error.message);
         } else {
             alert("Bin added successfully !");
+            clearForm();
             console.log(data);
         }
         setLoading(false);
-        clearForm();
     };
 
     const clearForm = () => {

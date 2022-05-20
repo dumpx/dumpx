@@ -7,10 +7,6 @@ import Header from "./components/Dashboard/Header";
 import { DashboardContainer } from "./components/Dashboard/styles";
 import Section from "./components/Section";
 
-// import Home from "./pages/Home";
-// import Register from "./pages/Register";
-// import Error from "./pages/Error";
-
 import { useSelector } from "react-redux";
 
 function App() {
@@ -31,11 +27,6 @@ function App() {
                 <DashboardContainer>
                     <Header />
                     <Section />
-                    {/* <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/:others" element={<Error />} />
-                    </Routes> */}
                 </DashboardContainer>
             )}
         </>

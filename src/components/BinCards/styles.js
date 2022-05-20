@@ -13,6 +13,10 @@ export const CardLeft = styled.div`
     flex-direction: column;
     justify-content: start;
     width: 50%;
+
+    ul{
+        margin: 0 auto 0 2rem;
+    }
 `
 export const CardRight = styled.div`
     display: flex;
@@ -35,18 +39,19 @@ export const BinVisuals = styled.div`
     }
 
     div{
-        width: 5rem;
         height: 15rem;
-        border: 1px solid #aaa;
         border-radius: 0.25rem;
         display: flex;
         flex-direction: column;
         justify-content: end;
 
+        clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+        background: #eee;
+        width: 15rem;
+        overflow: hidden;
+
         div{
             width: 100%;
-            background: #0c2;
-            height: 10%;
             border: none;
             border-radius: 0;
         }

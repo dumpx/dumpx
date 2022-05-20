@@ -13,4 +13,5 @@ export const MainContainer = styled.main`
     height: 100%;
     padding: 1rem;
     overflow: scroll;
+    position: relative;
 `;
