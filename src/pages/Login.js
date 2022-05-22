@@ -51,6 +51,7 @@ const Login = () => {
         console.log(user, error);
         if (error) {
             failedLogin(error.message);
+            setIsSigning(false);
             return;
         }
         setIsSigning(false);

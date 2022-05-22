@@ -40,12 +40,13 @@ export const BinVisuals = styled.div`
     }
 
     div {
+        border-bottom: 5px solid #dedede;
         height: 15rem;
         border-radius: 0.25rem;
         display: flex;
         flex-direction: column;
         justify-content: end;
-        margin-bottom: 1rem;
+        ${'' /* margin-bottom: 1rem; */}
 
         clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
         background: #eee;

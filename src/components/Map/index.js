@@ -14,9 +14,9 @@ const Map = ({ positions }) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {positions.map((position) => {
+            {positions.map((position, ind) => {
                 return (
-                    <Marker position={position}>
+                    <Marker position={position} key={ind}>
                         <Popup>Center of project submission</Popup>
                     </Marker>
                 );

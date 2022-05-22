@@ -46,6 +46,7 @@ const Signup = () => {
 
         if(error){
             alert("Failed to sign up!");
+            setIsSigning(false);
             return;
         }
 

@@ -7,6 +7,7 @@ import {
     GpsButton,
 } from "./styles";
 
+import DraggableMap from '../Map/DraggableMap';
 import { supabase } from "../../supabase";
 
 const Form = () => {
@@ -154,6 +155,7 @@ const Form = () => {
                         />
                     )}
                 </FormBox>
+                <DraggableMap setLat={setLat} setLong={setLong} />
             </FormContainer>
         </Fragment>
     );
