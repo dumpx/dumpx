@@ -7,8 +7,11 @@ export const FormContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    div{
+    form{
         flex:1;
+    }
+    div{
+        flex:2;
     }
 `;
 

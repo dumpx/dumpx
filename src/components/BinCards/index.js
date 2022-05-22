@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardLeft, CardRight, BinVisuals, RefreshButton } from "./styles";
+import {
+    Card,
+    CardLeft,
+    CardRight,
+    BinVisuals,
+    RefreshButton,
+    DeleteButton,
+    ButtonGroup,
+} from "./styles";
 import Map from "../Map";
 
 import { supabase } from "../../supabase";
@@ -28,8 +36,10 @@ const BinCards = ({ bin }) => {
     const getUpdateTime = (time) => {
         const prevDate = new Date(time);
         const currDate = new Date();
-        const hours = Math.floor((currDate-prevDate) / 36e5);
-        const mins = Math.floor(((currDate-prevDate) / 36e5)*60 - hours*60);
+        const hours = Math.floor((currDate - prevDate) / 36e5);
+        const mins = Math.floor(
+            ((currDate - prevDate) / 36e5) * 60 - hours * 60
+        );
 
         setUpdateTime(`${hours} hours and ${mins} mins ago`);
     };
@@ -56,17 +66,45 @@ const BinCards = ({ bin }) => {
         postFilledData();
     };
 
+    const deleteBinHandler = async () => {
+        const c = window.confirm("Are you sure you want to delete this bin ?");
+        if (!c) return;
+
+        const { data, error } = await supabase
+            .from("Bins")
+            .delete()
+            .eq("thingspeak_link", bin.thingspeak_link);
+
+        if (error) {
+            alert("Could not delete bin, please try later.");
+            return;
+        }
+        
+        alert("Bin has been successfulyy deleted !");
+    };
+
     useEffect(() => {
         connectArduino();
-        // console.log("Called");
     });
 
     return (
         <Card>
             <CardLeft>
-                <RefreshButton onClick={connectArduino} title="Fetch latest fill detail">
-                    {isRefreshing ? "Refreshing ...." : "Refresh 🗘"}
-                </RefreshButton>
+                <ButtonGroup>
+                    <RefreshButton
+                        onClick={connectArduino}
+                        title="Fetch latest fill detail"
+                    >
+                        {isRefreshing ? "Refreshing ...." : "Refresh 🗘"}
+                    </RefreshButton>
+
+                    <DeleteButton
+                        onClick={deleteBinHandler}
+                        title="Delete this bin from database"
+                    >
+                        Delete bin
+                    </DeleteButton>
+                </ButtonGroup>
                 <ul>
                     <li>
                         <p>Code: {bin.code}</p>

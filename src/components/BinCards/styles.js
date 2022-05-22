@@ -46,7 +46,6 @@ export const BinVisuals = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: end;
-        ${'' /* margin-bottom: 1rem; */}
 
         clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
         background: #eee;
@@ -75,4 +74,27 @@ export const RefreshButton = styled.button`
         background: #70ffbd;
         cursor: pointer;
     }
+`;
+
+export const DeleteButton = styled.button`
+    padding: 0.5rem 1rem;
+    align-self: center;
+    border-radius: 1rem;
+    background: #ffd5b1;
+    border: none;
+    transition: 0.2s background ease-in-out;
+    white-space: nowrap;
+    text-align: center;
+
+    :hover {
+        background: #ffac64;
+        cursor: pointer;
+    }
+`;
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 `;
