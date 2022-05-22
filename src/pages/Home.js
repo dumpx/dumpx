@@ -14,7 +14,7 @@ const Home = () => {
     const [active, setActive] = useState(0);
     const [full, setFull] = useState(0);
     const [empty, setEmpty] = useState(0);
-    let positions = [[26.8439, 75.5652], [26.843, 75.565]];
+    let positions = [[26.8439, 75.5652]];
 
     const fetchBins = async () => {
         let { data: Bins, error } = await supabase.from("Bins").select("*");

@@ -28,7 +28,7 @@ export const CardRight = styled.div`
 
 export const BinVisuals = styled.div`
     width: 100%;
-    height: 100%;
+    ${'' /* height: 100%; */}
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,4 +97,23 @@ export const ButtonGroup = styled.div`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+`;
+
+export const TableStyle = styled.table`
+    width: 75%;
+    margin: auto;
+    border-collapse: collapse;
+    tr {
+        td {
+            border: 1px solid #999;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        :nth-child(1) {
+            width: 30%;
+        }
+        :nth-child(2) {
+            width: 50%;
+        }
+    }
 `;

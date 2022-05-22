@@ -1,22 +1,25 @@
-import React, { useState, useEffect, useCallback  } from "react";
+import React, { useState } from "react";
 import {
     Card,
     CardLeft,
     CardRight,
-    BinVisuals,
     RefreshButton,
     DeleteButton,
     ButtonGroup,
 } from "./styles";
 import Map from "../Map";
+import Table from "./Table";
+import BinVisualBox from "./BinVisualBox";
 
 import { supabase } from "../../supabase";
 
 const BinCards = ({ bin }) => {
     const [binColor, setBinColor] = useState("#0f0");
     const [perc, setPerc] = useState(0);
-    const [updateTime, setUpdateTime] = useState("");
-    const [binFilled, setBinFilled] = useState((bin.height - bin.filled).toFixed(1));
+    const [updateTime, setUpdateTime] = useState("0 hours 0 mins ago");
+    const [binFilled, setBinFilled] = useState(
+        (bin.height - bin.filled).toFixed(1)
+    );
     const [isRefreshing, setIsRefreshing] = useState(false);
 
     const updateBinColor = () => {
@@ -44,14 +47,14 @@ const BinCards = ({ bin }) => {
         setUpdateTime(`${hours} hours and ${mins} mins ago`);
     };
 
-    const postFilledData = async () => {
+    const postUpdatedData = async (updatedTime) => {
         await supabase
             .from("Bins")
-            .update({ filled: binFilled })
+            .update({ filled: binFilled, updated_at: updatedTime })
             .eq("thingspeak_link", bin.thingspeak_link);
     };
 
-    const connectArduino = useCallback(async () => {
+    const connectArduino = async () => {
         setIsRefreshing(true);
         if (!bin.thingspeak_link) {
             console.log("Thingspeak not connected !");
@@ -63,16 +66,14 @@ const BinCards = ({ bin }) => {
         getUpdateTime(data.feeds[0].created_at);
         updateBinColor();
         setIsRefreshing(false);
-        postFilledData();
-
-        console.log("called");
-    },[]);
+        postUpdatedData(data.feeds[0].created_at);
+    };
 
     const deleteBinHandler = async () => {
         const c = window.confirm("Are you sure you want to delete this bin ?");
         if (!c) return;
 
-        const { data, error } = await supabase 
+        const { data, error } = await supabase
             .from("Bins")
             .delete()
             .eq("thingspeak_link", bin.thingspeak_link);
@@ -85,12 +86,7 @@ const BinCards = ({ bin }) => {
         alert("Bin has been successfulyy deleted !");
     };
 
-    // const callAPI = useMemo(() => connectArduino, []);
-
-    useEffect(() => {
-        connectArduino();
-        // callAPI();
-    });
+    console.log(perc);
 
     return (
         <Card>
@@ -110,40 +106,18 @@ const BinCards = ({ bin }) => {
                         Delete bin
                     </DeleteButton>
                 </ButtonGroup>
-                <ul>
-                    <li>
-                        <p>Code: {bin.code}</p>
-                    </li>
-                    <li>
-                        <p>Location: {bin.location}</p>
-                    </li>
-                    <li>
-                        <p>Latitude: {bin.latitude}</p>
-                    </li>
-                    <li>
-                        <p>Longitude: {bin.longitude}</p>
-                    </li>
-                    <li>
-                        <p>Description: {bin.description}</p>
-                    </li>
-                    <li>
-                        <p>Bin Height: {bin.height}cm</p>
-                    </li>
-                    <li>
-                        <p>Updated: {updateTime}</p>
-                    </li>
-                </ul>
-                <BinVisuals>
-                    <div>
-                        <div
-                            style={{
-                                backgroundColor: binColor,
-                                height: `${perc}%`,
-                            }}
-                        ></div>
-                    </div>
-                    Filled: {perc}%
-                </BinVisuals>
+
+                <Table
+                    code={bin.code}
+                    location={bin.location}
+                    latitude={bin.latitude}
+                    longitude={bin.longitude}
+                    description={bin.description}
+                    binHeight={bin.height}
+                    updated={updateTime}
+                />
+
+                <BinVisualBox color={binColor} height={perc} />
             </CardLeft>
             <CardRight>
                 <Map positions={[[bin.latitude, bin.longitude]]} />
