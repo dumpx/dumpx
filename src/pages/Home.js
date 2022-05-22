@@ -11,11 +11,10 @@ import { updateBins } from "../store/reducers/bins";
 
 const Home = () => {
     const dispatch = useDispatch();
-    // const [total, setTotal] = useState(0)
     const [active, setActive] = useState(0);
     const [full, setFull] = useState(0);
     const [empty, setEmpty] = useState(0);
-    const position = [26.8439, 75.5652];
+    let positions = [[26.8439, 75.5652], [26.843, 75.565]];
 
     const fetchBins = async () => {
         let { data: Bins, error } = await supabase.from("Bins").select("*");
@@ -27,8 +26,17 @@ const Home = () => {
         setFull(Bins.reduce((previousValue, curr) =>previousValue + (curr.filled >= 75 ? 1 : 0),0));
         setEmpty(Bins.reduce((previousValue, curr) =>previousValue + (curr.filled === "0" ? 1 : 0),0));
         dispatch(updateBins(Bins));
-        console.log(Bins, error);
+        fillPositions(Bins);
     };
+
+    const fillPositions = (Bins) => {
+        positions = Bins.map((bin)=>{
+            return(
+                [bin.latitude, bin.longitude]
+                );
+            });
+        // console.log("POZ: ", positions);
+    }
 
     useEffect(() => {
         fetchBins();
@@ -38,12 +46,11 @@ const Home = () => {
         <Fragment>
             <HomeContainer>
                 <DashboardHeader>
-                    {/* <Card title="Total bins" amount={total} /> */}
                     <Card title="Active bins" amount={active} />
                     <Card title="Full bins" amount={full} />
                     <Card title="Empty bins" amount={empty} />
                 </DashboardHeader>
-                <Map position={position} />
+                <Map positions={positions} style={{width: "80%"}}/>
             </HomeContainer>
         </Fragment>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { MainContainer, SectionContainer } from "./styles";
 import Sidebar from "../Sidebar";
 
@@ -10,13 +10,13 @@ import Register from "../../pages/Register";
 import Bins from "../../pages/Bins";
 
 const Index = () => {
-    // console.log("Main");
     return (
         <SectionContainer>
             <Sidebar />
             <MainContainer>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<Navigate replace to="/dashboard" />} />
+                    <Route path="/dashboard" element={<Home />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/bins" element={<Bins />} />
                     <Route path="/:others" element={<Error />} />

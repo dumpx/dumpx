@@ -29,7 +29,7 @@ const BinCards = ({ bin }) => {
         const prevDate = new Date(time);
         const currDate = new Date();
         const hours = Math.floor((currDate-prevDate) / 36e5);
-        const mins = Math.floor(((currDate-prevDate) / 36e5)*60);
+        const mins = Math.floor(((currDate-prevDate) / 36e5)*60 - hours*60);
 
         setUpdateTime(`${hours} hours and ${mins} mins ago`);
     };
@@ -58,13 +58,13 @@ const BinCards = ({ bin }) => {
 
     useEffect(() => {
         connectArduino();
-        console.log("Called");
+        // console.log("Called");
     });
 
     return (
         <Card>
             <CardLeft>
-                <RefreshButton onClick={connectArduino}>
+                <RefreshButton onClick={connectArduino} title="Fetch latest fill detail">
                     {isRefreshing ? "Refreshing ...." : "Refresh 🗘"}
                 </RefreshButton>
                 <ul>
@@ -100,7 +100,7 @@ const BinCards = ({ bin }) => {
                 </BinVisuals>
             </CardLeft>
             <CardRight>
-                <Map position={[bin.latitude, bin.longitude]} />
+                <Map positions={[[bin.latitude, bin.longitude]]} />
             </CardRight>
         </Card>
     );

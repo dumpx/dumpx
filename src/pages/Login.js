@@ -7,7 +7,7 @@ import {
     LoginForm,
     RegisterShortcut,
     HRLine,
-    GoogleButton,
+    // GoogleButton,
     FormHeading,
     LogoImageDiv,
     LogoImage,
@@ -15,12 +15,15 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/auth";
+import { useNavigate } from "react-router-dom";
 
 // import GoogleLogin from "react-google-login";
 
 const Login = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isValid, setIsValid] = useState(true);
+    const [isSigning, setIsSigning] = useState(false);
 
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
@@ -31,11 +34,13 @@ const Login = () => {
 
     const loginHandler = async (e) => {
         e.preventDefault();
+        setIsSigning(true);
         if (
             usernameRef.current.value.trim() === "" ||
             passwordRef.current.value.trim() === ""
         ) {
             setIsValid(false);
+            setIsSigning(false);
             return;
         }
         let { user, error } = await supabase.auth.signIn({
@@ -48,24 +53,25 @@ const Login = () => {
             failedLogin(error.message);
             return;
         }
-
+        setIsSigning(false);
         const email = user.email;
         dispatch(login(email));
+        navigate("/dashboard");
     };
 
-    async function signInWithGoogle() {
-        const { user, session, error } = await supabase.auth.signIn({
-            provider: "google",
-        });
-        console.log(user, session, error);
+    // async function signInWithGoogle() {
+    //     const { user, session, error } = await supabase.auth.signIn({
+    //         provider: "google",
+    //     });
+    //     // console.log(user, session, error);
 
-        if (error) {
-            failedLogin(error.message);
-            return;
-        }
-        const email = usernameRef.current.value;
-        dispatch(login(email));
-    }
+    //     if (error) {
+    //         failedLogin(error.message);
+    //         return;
+    //     }
+    //     const email = user.email;
+    //     dispatch(login(email));
+    // }
 
     // const handleAuthentication = async (googleResponse) => {
     //     //     headers: {"Content-Type":"application/json"};
@@ -93,11 +99,11 @@ const Login = () => {
                 </FormHeading>
                 <LoginForm onSubmit={loginHandler} isValid={isValid}>
                     <input
-                        type="text"
-                        name="username"
-                        id="username"
+                        type="email"
+                        name="email"
+                        id="email"
                         ref={usernameRef}
-                        placeholder="Enter Username"
+                        placeholder="Enter email"
                     />
                     <input
                         type="password"
@@ -106,14 +112,14 @@ const Login = () => {
                         ref={passwordRef}
                         placeholder="Enter Password"
                     />
-                    <input type="submit" value="Login" onClick={loginHandler} />
+                    <input type="submit" value={isSigning ? "Signing in ...":"Login"} onClick={loginHandler} />
                 </LoginForm>
                 <HRLine>OR</HRLine>
-                <div className="context-switch">
+                {/* <div className="context-switch">
                     <GoogleButton onClick={signInWithGoogle}>
                         Continue with Google
                     </GoogleButton>
-                </div>
+                </div> */}
                 <RegisterShortcut>
                     <div>
                         <p>Don't have an account ?</p>

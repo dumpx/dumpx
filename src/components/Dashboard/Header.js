@@ -9,12 +9,14 @@ import {
 } from "./styles";
 import binImage from "../../assets/bin.png";
 import { supabase } from "../../supabase";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/reducers/auth";
 
 const Header = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const searchSubmitHandler = (e) => {
         e.preventDefault();
         console.log("Searched something ?");
@@ -22,8 +24,8 @@ const Header = () => {
 
     const logoutHandler = async () => {
         await supabase.auth.signOut();
+        navigate("/login");
         dispatch(logout());
-        console.log("LOGGING OUT ...");
     };
 
     return (

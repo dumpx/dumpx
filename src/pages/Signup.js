@@ -7,7 +7,7 @@ import {
     LoginForm,
     RegisterShortcut,
     HRLine,
-    GoogleButton,
+    // GoogleButton,
     FormHeading,
     LogoImageDiv,
     LogoImage,
@@ -20,6 +20,7 @@ import { login } from "../store/reducers/auth";
 const Signup = () => {
     const dispatch = useDispatch();
     const [isValid, setIsValid] = useState(true);
+    const [isSigning, setIsSigning] = useState(false);
 
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
@@ -27,38 +28,42 @@ const Signup = () => {
 
     const signupHandler = async (e) => {
         e.preventDefault();
+        setIsSigning(true);
         if (
-            usernameRef.current.value === "" ||
-            passwordRef.current.value === "" ||
-            passwordRef.current.value !== cPasswordRef.current.value
+            usernameRef.current.value.trim() === "" ||
+            passwordRef.current.value.trim() === "" ||
+            passwordRef.current.value.trim() !== cPasswordRef.current.value.trim()
         ) {
             setIsValid(false);
             alert("Password did not match !");
+            setIsSigning(false);
             return;
         }
         let { user, error } = await supabase.auth.signUp({
-            email: usernameRef.current.value,
-            password: passwordRef.current.value
+            email: usernameRef.current.value.trim(),
+            password: passwordRef.current.value.trim()
         })
 
         if(error){
             alert("Failed to sign up!");
             return;
         }
-  
+
         const email = user.email;
+        setIsSigning(false);
+        alert("You've successfully signed up !");
         dispatch(login(email));
     };
 
     
-    async function signInWithGoogle() {
-        const { user, session, error } = await supabase.auth.signIn({
-            provider: 'google',
-        })
-        console.log(user, session, error);
-        const email = usernameRef.current.value;
-        dispatch(login(email));
-      }
+    // async function signInWithGoogle() {
+    //     const { user, session, error } = await supabase.auth.signIn({
+    //         provider: 'google',
+    //     })
+    //     console.log(user, session, error);
+    //     const email = usernameRef.current.value;
+    //     dispatch(login(email));
+    //   }
 
     return (
         <AuthPage>
@@ -67,16 +72,17 @@ const Signup = () => {
                     <LogoImageDiv>
                         <LogoImage src={binImage} alt="logo" />
                     </LogoImageDiv>
-                    <h2>DUMPX</h2>
-                    <p>Make it work !</p>
+                    <h2>SWMS</h2>
+                    <p>Smart Waste Management System</p>
                 </FormHeading>
                 <LoginForm onSubmit={signupHandler} isValid={isValid}>
                     <input
-                        type="text"
-                        name="username"
-                        id="username"
+                        type="email"
+                        name="email"
+                        id="email"
                         ref={usernameRef}
-                        placeholder="Enter Username"
+                        placeholder="Enter Email"
+                        required
                     />
                     <input
                         type="password"
@@ -84,6 +90,7 @@ const Signup = () => {
                         id="password"
                         ref={passwordRef}
                         placeholder="Enter Password"
+                        required
                     />
                     <input
                         type="password"
@@ -91,17 +98,18 @@ const Signup = () => {
                         id="cpassword"
                         ref={cPasswordRef}
                         placeholder="Enter Password Again"
+                        required
                     />
                     <input
                         type="submit"
-                        value="Signup"
+                        value={isSigning ? "Signing up ..." : "Sign up"}
                         onClick={signupHandler}
                     />
                 </LoginForm>
                 <HRLine>OR</HRLine>
-                <div className="context-switch">
+                {/* <div className="context-switch">
                     <GoogleButton onClick={signInWithGoogle}>Continue with Google</GoogleButton>
-                </div>
+                </div> */}
                 <RegisterShortcut>
                     <div>
                         <p>Already have an account ?</p>

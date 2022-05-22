@@ -6,7 +6,7 @@ const Register = () => {
     return (
         <>
             <RegisterContainer>
-                <h1>Register a bin</h1>
+                <h1>Register a new bin</h1>
                 <Registry />
             </RegisterContainer>
         </>
