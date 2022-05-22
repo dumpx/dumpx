@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from "react";
 import BinCards from "../components/BinCards";
 import "../components/animation/loading.css";
+import styled from 'styled-components';
 
 import { supabase } from "../supabase";
+
+import EmptyCanvas from '../assets/empty.svg';
+
+const EmptyDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2rem;
+    height: 100%
+`;
 
 const Bins = () => {
     const [binsArray, setBinsArray] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isEmpty, setIsEmpty] = useState(false);
-    const [sortManner, setSortManner] = useState(null);
+    // const [sortManner, setSortManner] = useState(null);
 
     const fetchBins = async () => {
         setIsLoading(true);
@@ -23,11 +35,11 @@ const Bins = () => {
         setBinsArray(Bins);
         setIsLoading(false);
         setIsEmpty(Bins.length === 0 ? true : false);
-        console.log(Bins, error);
+        // console.log(Bins, error);
     };
 
     // const sortBy = (e) => {console.log("Sort by: ",e)};
-    console.log(sortManner)
+    // console.log(sortManner);
 
     useEffect(() => {
         fetchBins();
@@ -44,7 +56,14 @@ const Bins = () => {
                     </div>
                 </div>
             )}
-            {isEmpty && <h3>No bin found ! Try adding some.</h3>}
+            {isEmpty && (
+                <EmptyDiv>
+                    <img src={EmptyCanvas} alt="empty" style={{width: "25%"}} />
+                    <p>
+                        No bin found ! Try adding some.
+                    </p>
+                </EmptyDiv>
+            )}
             {/* {!isEmpty && (
                 <>
                     <label for="gender"> Select you gender</label>

@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardLeft, CardRight, BinVisuals } from "./styles";
+import { Card, CardLeft, CardRight, BinVisuals, RefreshButton } from "./styles";
 import Map from "../Map";
+
+import { supabase } from "../../supabase";
 
 const BinCards = ({ bin }) => {
     const [binColor, setBinColor] = useState("#0f0");
     const [perc, setPerc] = useState(0);
     const [updateTime, setUpdateTime] = useState("");
     const [binFilled, setBinFilled] = useState(bin.filled);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const updateBinColor = () => {
-        setPerc(parseInt((binFilled / bin.height) * 100));
+        const prcnt = Math.floor((binFilled / bin.height) * 100);
+        setPerc(prcnt > 100 ? 100 : prcnt);
         if (perc < 30) {
             setBinColor("#0f0");
         } else if (perc < 50) {
@@ -24,32 +28,45 @@ const BinCards = ({ bin }) => {
     const getUpdateTime = (time) => {
         const prevDate = new Date(time);
         const currDate = new Date();
-
-        const hours = ((currDate - prevDate) / (1000 * 60 * 60)).toFixed(2);
-        const mins = Math.floor((currDate - prevDate) / (1000 * 60 * 60*24));
+        const hours = Math.floor((currDate-prevDate) / 36e5);
+        const mins = Math.floor(((currDate-prevDate) / 36e5)*60);
 
         setUpdateTime(`${hours} hours and ${mins} mins ago`);
-    }
+    };
+
+    const postFilledData = async () => {
+        await supabase
+            .from("Bins")
+            .update({ filled: binFilled })
+            .eq("thingspeak_link", bin.thingspeak_link);
+    };
 
     const connectArduino = async () => {
-        if(!bin.thingspeak_link){
+        setIsRefreshing(true);
+        if (!bin.thingspeak_link) {
             console.log("Thingspeak not connected !");
         }
         const res = await fetch(bin.thingspeak_link);
         const data = await res.json();
-        
+
         setBinFilled(data.feeds[0].field1);
-        getUpdateTime(data.channel.updated_at);
+        getUpdateTime(data.feeds[0].created_at);
         updateBinColor();
-    }
+        setIsRefreshing(false);
+        postFilledData();
+    };
 
     useEffect(() => {
         connectArduino();
+        console.log("Called");
     });
 
     return (
         <Card>
             <CardLeft>
+                <RefreshButton onClick={connectArduino}>
+                    {isRefreshing ? "Refreshing ...." : "Refresh 🗘"}
+                </RefreshButton>
                 <ul>
                     <li>
                         <p>Code: {bin.code}</p>
@@ -79,11 +96,11 @@ const BinCards = ({ bin }) => {
                             }}
                         ></div>
                     </div>
-                    Filled: {binFilled}%
+                    Filled: {perc}%
                 </BinVisuals>
             </CardLeft>
             <CardRight>
-                <Map position={[bin.latitude, bin.longitude]}/>
+                <Map position={[bin.latitude, bin.longitude]} />
             </CardRight>
         </Card>
     );

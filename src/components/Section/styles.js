@@ -12,6 +12,6 @@ export const MainContainer = styled.main`
     flex: 1;
     height: 100%;
     padding: 1rem;
-    overflow: scroll;
+    overflow-y: scroll;
     position: relative;
 `;

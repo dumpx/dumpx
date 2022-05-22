@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/auth";
 
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -32,16 +32,15 @@ const Login = () => {
     const loginHandler = async (e) => {
         e.preventDefault();
         if (
-            usernameRef.current.value === "" ||
-            passwordRef.current.value === ""
+            usernameRef.current.value.trim() === "" ||
+            passwordRef.current.value.trim() === ""
         ) {
             setIsValid(false);
             return;
         }
-        // dispatch({ type: "LOGIN" });
         let { user, error } = await supabase.auth.signIn({
-            email: "yadav.199302068@muj.manipal.edu",
-            password: "Password@123",
+            email: usernameRef.current.value.trim(),
+            password: passwordRef.current.value.trim(),
         });
 
         console.log(user, error);

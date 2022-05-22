@@ -10,7 +10,7 @@ import Register from "../../pages/Register";
 import Bins from "../../pages/Bins";
 
 const Index = () => {
-    console.log("Main");
+    // console.log("Main");
     return (
         <SectionContainer>
             <Sidebar />

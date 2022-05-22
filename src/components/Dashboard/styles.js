@@ -58,7 +58,7 @@ export const DashboardHeaderSearch = styled.form`
 export const HeaderLogo = styled.img`
     width: 2rem;
     height: 2rem;
-    background: cadetblue;
+    ${'' /* background: cadetblue; */}
     border-radius: 50%;
     aspect-ratio: 1/1;
 `;

@@ -32,7 +32,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchBins();
-    }, []);
+    });
 
     return (
         <Fragment>

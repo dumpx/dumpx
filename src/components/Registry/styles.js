@@ -1,7 +1,10 @@
 import styled from "styled-components";
+// import bgImage from "../../assets/add.svg";
 
 export const FormContainer = styled.div`
     // enter styles
+    ${'' /* background-image: url(${bgImage});
+    background-position: center; */}
 `;
 
 export const FormInput = styled.input`
@@ -24,7 +27,6 @@ export const FormBox = styled.form`
     row-gap: 0.5rem;
     padding: 3rem;
 `;
-
 
 export const InputButton = styled.input.attrs({
     type: "button",
