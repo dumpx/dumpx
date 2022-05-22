@@ -19,8 +19,9 @@ export const DashboardHeaderLeft = styled.div`
     width: 5rem;
     text-align: center;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    column-gap: 0.5rem;
 `;
 
 export const DashboardHeaderRight = styled.div`

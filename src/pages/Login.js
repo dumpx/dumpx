@@ -14,8 +14,9 @@ import {
 } from "./styles";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import { login } from "../store/reducers/auth";
+
+import GoogleLogin from "react-google-login";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -67,6 +68,20 @@ const Login = () => {
         dispatch(login(email));
     }
 
+    // const handleAuthentication = async (googleResponse) => {
+    //     //     headers: {"Content-Type":"application/json"};
+    //     const response = await fetch("/api/v1/auth/google", {
+    //         method: "POST",
+    //         token: googleResponse.tokenId,
+    //         body: JSON.stringify({
+    //             token: googleResponse.tokenId,
+    //         }),
+    //     });
+    //     const data = await response.json();
+    //     localStorage.setItem('login-data', JSON.stringify(data));
+    //     console.log(googleResponse, data);
+    // };
+
     return (
         <AuthPage>
             <AuthFrame>
@@ -74,8 +89,8 @@ const Login = () => {
                     <LogoImageDiv>
                         <LogoImage src={binImage} alt="logo" />
                     </LogoImageDiv>
-                    <h2>DUMPX</h2>
-                    <p>Make it work !</p>
+                    <h2>SWMS</h2>
+                    <p>Smart Waste Management System</p>
                 </FormHeading>
                 <LoginForm onSubmit={loginHandler} isValid={isValid}>
                     <input
@@ -108,6 +123,13 @@ const Login = () => {
                         Create an account
                     </Link>
                 </RegisterShortcut>
+                {/* <GoogleLogin
+                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                    buttonText="Continue with Google"
+                    onSuccess={handleAuthentication}
+                    onFailure={handleAuthentication}
+                    cookiePolicy={"single_host_origin"}
+                /> */}
             </AuthFrame>
         </AuthPage>
     );

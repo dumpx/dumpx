@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const FormContainer = styled.div`
     // enter styles
@@ -25,9 +25,10 @@ export const FormBox = styled.form`
     padding: 3rem;
 `;
 
-export const InputButton = styled.input.attrs({ 
-    type: 'button',
-  })`
+
+export const InputButton = styled.input.attrs({
+    type: "button",
+})`
     outline: none;
     border: none;
     border-radius: 0.5rem;
@@ -35,11 +36,29 @@ export const InputButton = styled.input.attrs({
     font-size: 0.75rem;
     background: #00ab55;
     color: #fff;
-    margin-top: 1rem;
-    transition: background 0.3s ease-in-out; 
+    transition: background 0.3s ease-in-out;
 
     :hover {
         cursor: pointer;
         background: #00cc55;
     }
-  `
+`;
+
+export const GpsButton = styled.input.attrs({
+    type: "button",
+})`
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 2.75rem;
+    font-size: 0.75rem;
+    background: #00ab55;
+    color: #fff;
+    margin-bottom: 1rem;
+    transition: background 0.3s ease-in-out;
+
+    :hover {
+        cursor: pointer;
+        background: #00cc55;
+    }
+`;

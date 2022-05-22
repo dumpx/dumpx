@@ -30,7 +30,7 @@ const Header = () => {
         <DashBoardHeader>
             <DashboardHeaderLeft>
                 <HeaderLogo src={binImage}/>
-                <h3>DUMPX</h3>
+                <h3>SWMS</h3>
             </DashboardHeaderLeft>
             <DashboardHeaderSearch onSubmit={searchSubmitHandler}>
                 <input

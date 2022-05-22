@@ -5,30 +5,46 @@ import Map from "../Map";
 const BinCards = ({ bin }) => {
     const [binColor, setBinColor] = useState("#0f0");
     const [perc, setPerc] = useState(0);
-    // let binColor = "#0f0";
-    // let perc = 0;
+    const [updateTime, setUpdateTime] = useState("");
+    const [binFilled, setBinFilled] = useState(bin.filled);
 
     const updateBinColor = () => {
-        setPerc(parseInt((bin.filled / bin.height) * 100));
-        // perc = (bin.filled / bin.height )* 100;
+        setPerc(parseInt((binFilled / bin.height) * 100));
         if (perc < 30) {
             setBinColor("#0f0");
-            // binColor = "#0f0";
         } else if (perc < 50) {
             setBinColor("#2f0");
-            // binColor = "#2f0";
         } else if (perc < 75) {
             setBinColor("#a00");
-            // binColor = "#a00";
         } else {
             setBinColor("#f00");
-            // binColor = "#f00";
         }
     };
 
-    useEffect(() => {
+    const getUpdateTime = (time) => {
+        const prevDate = new Date(time);
+        const currDate = new Date();
+
+        const hours = ((currDate - prevDate) / (1000 * 60 * 60)).toFixed(2);
+        const mins = Math.floor((currDate - prevDate) / (1000 * 60 * 60*24));
+
+        setUpdateTime(`${hours} hours and ${mins} mins ago`);
+    }
+
+    const connectArduino = async () => {
+        if(!bin.thingspeak_link){
+            console.log("Thingspeak not connected !");
+        }
+        const res = await fetch(bin.thingspeak_link);
+        const data = await res.json();
+        
+        setBinFilled(data.feeds[0].field1);
+        getUpdateTime(data.channel.updated_at);
         updateBinColor();
-        console.log(binColor);
+    }
+
+    useEffect(() => {
+        connectArduino();
     });
 
     return (
@@ -50,6 +66,9 @@ const BinCards = ({ bin }) => {
                     <li>
                         <p>Description: {bin.description}</p>
                     </li>
+                    <li>
+                        <p>Updated: {updateTime}</p>
+                    </li>
                 </ul>
                 <BinVisuals>
                     <div>
@@ -60,7 +79,7 @@ const BinCards = ({ bin }) => {
                             }}
                         ></div>
                     </div>
-                    Filled: {bin.filled}%
+                    Filled: {binFilled}%
                 </BinVisuals>
             </CardLeft>
             <CardRight>

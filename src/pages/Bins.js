@@ -8,6 +8,7 @@ const Bins = () => {
     const [binsArray, setBinsArray] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isEmpty, setIsEmpty] = useState(false);
+    const [sortManner, setSortManner] = useState(null);
 
     const fetchBins = async () => {
         setIsLoading(true);
@@ -21,9 +22,12 @@ const Bins = () => {
         }
         setBinsArray(Bins);
         setIsLoading(false);
-        setIsEmpty(Bins.length ===0 ? true: false);
+        setIsEmpty(Bins.length === 0 ? true : false);
         console.log(Bins, error);
     };
+
+    // const sortBy = (e) => {console.log("Sort by: ",e)};
+    console.log(sortManner)
 
     useEffect(() => {
         fetchBins();
@@ -40,9 +44,20 @@ const Bins = () => {
                     </div>
                 </div>
             )}
-            {isEmpty && (
-                <h3>No bin found ! Try adding some.</h3>
-            )}
+            {isEmpty && <h3>No bin found ! Try adding some.</h3>}
+            {/* {!isEmpty && (
+                <>
+                    <label for="gender"> Select you gender</label>
+                    <select name="gender" value={sortManner} onChange={setSortManner}>
+                        <option value="none" selected>
+                            Gender
+                        </option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">other</option>
+                    </select>
+                </>
+            )} */}
             {binsArray.map((bin) => {
                 return <BinCards bin={bin} key={bin.id} />;
             })}

@@ -1,5 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { FormContainer, FormInput, FormBox, InputButton } from "./styles";
+import {
+    FormContainer,
+    FormInput,
+    FormBox,
+    InputButton,
+    GpsButton,
+} from "./styles";
 
 import { supabase } from "../../supabase";
 
@@ -10,33 +16,44 @@ const Form = () => {
     const [lat, setLat] = useState("");
     const [long, setLong] = useState("");
     const [loading, setLoading] = useState(false);
+    const [thingspeak, setThingspeak] = useState("");
 
     const createPost = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        if(!binCode.trim() || !location.trim()|| !description.trim()|| !lat.trim()|| !long.trim()){
-            alert("Please enter data correctly !");
-            setLoading(false);
-            return;
-        }
+        try {
+            if (
+                !binCode.trim() ||
+                !location.trim() ||
+                !description.trim() ||
+                !thingspeak.trim()
+            ) {
+                alert("Please enter data correctly !");
+                setLoading(false);
+                return;
+            }
 
-        const { data, error } = await supabase.from("Bins").insert([
-            {
-                code: binCode,
-                location: location,
-                description: description,
-                latitude: lat,
-                longitude: long,
-            },
-        ]);
+            const { data, error } = await supabase.from("Bins").insert([
+                {
+                    code: binCode,
+                    location: location,
+                    description: description,
+                    latitude: lat,
+                    longitude: long,
+                    thingspeak_link: thingspeak,
+                },
+            ]);
 
-        if (error) {
-            alert(error.error_description || error.message);
-        } else {
-            alert("Bin added successfully !");
-            clearForm();
-            console.log(data);
+            if (error) {
+                alert(error.error_description || error.message);
+            } else {
+                alert("Bin added successfully !");
+                clearForm();
+                console.log(data);
+            }
+        } catch (error) {
+            console.log(error);
         }
         setLoading(false);
     };
@@ -47,8 +64,21 @@ const Form = () => {
         setDescription("");
         setLat("");
         setLong("");
-    }
+        setThingspeak("");
+    };
 
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((e) => {
+                setLat(e.coords.latitude);
+                setLong(e.coords.longitude);
+            });
+        } else {
+            alert(
+                "Sorry, Your browser either prevents sharing location or device does not support GPS !"
+            );
+        }
+    };
     return (
         <Fragment>
             <FormContainer>
@@ -61,7 +91,7 @@ const Form = () => {
                         value={binCode}
                     />
 
-                    <label htmlFor="bin-location">Bin Location</label>
+                    <label htmlFor="bin-location">Location</label>
                     <FormInput
                         type="text"
                         placeholder="Enter bin location"
@@ -85,6 +115,8 @@ const Form = () => {
                         placeholder="Enter latitude"
                         onChange={(event) => setLat(event.target.value)}
                         value={lat}
+                        step="any"
+                        required
                     />
 
                     <label htmlFor="longitude">Longitude</label>
@@ -95,6 +127,22 @@ const Form = () => {
                         placeholder="Enter longitude"
                         onChange={(event) => setLong(event.target.value)}
                         value={long}
+                        step="any"
+                        required
+                    />
+
+                    <GpsButton
+                        onClick={getLocation}
+                        value="Get current Location"
+                    />
+
+                    <label htmlFor="thingspeak">Thingspeak API </label>
+                    <FormInput
+                        type="url"
+                        placeholder="Enter Thingspeak api to connect arduino"
+                        onChange={(event) => setThingspeak(event.target.value)}
+                        value={thingspeak}
+                        required
                     />
                     {loading ? (
                         <InputButton value="submitting ..." />
