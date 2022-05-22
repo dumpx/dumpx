@@ -48,7 +48,7 @@ const Login = () => {
             password: passwordRef.current.value.trim(),
         });
 
-        console.log(user, error);
+        // console.log(user, error);
         if (error) {
             failedLogin(error.message);
             setIsSigning(false);

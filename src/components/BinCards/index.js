@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback  } from "react";
 import {
     Card,
     CardLeft,
@@ -16,11 +16,11 @@ const BinCards = ({ bin }) => {
     const [binColor, setBinColor] = useState("#0f0");
     const [perc, setPerc] = useState(0);
     const [updateTime, setUpdateTime] = useState("");
-    const [binFilled, setBinFilled] = useState(bin.filled);
+    const [binFilled, setBinFilled] = useState((bin.height - bin.filled).toFixed(1));
     const [isRefreshing, setIsRefreshing] = useState(false);
 
     const updateBinColor = () => {
-        const prcnt = Math.floor((binFilled / bin.height) * 100);
+        const prcnt = Math.floor(Math.abs((binFilled / bin.height) * 100));
         setPerc(prcnt > 100 ? 100 : prcnt);
         if (perc < 30) {
             setBinColor("#0f0");
@@ -51,7 +51,7 @@ const BinCards = ({ bin }) => {
             .eq("thingspeak_link", bin.thingspeak_link);
     };
 
-    const connectArduino = async () => {
+    const connectArduino = useCallback(async () => {
         setIsRefreshing(true);
         if (!bin.thingspeak_link) {
             console.log("Thingspeak not connected !");
@@ -59,18 +59,20 @@ const BinCards = ({ bin }) => {
         const res = await fetch(bin.thingspeak_link);
         const data = await res.json();
 
-        setBinFilled(data.feeds[0].field1);
+        setBinFilled((bin.height - data.feeds[0].field1).toFixed(1));
         getUpdateTime(data.feeds[0].created_at);
         updateBinColor();
         setIsRefreshing(false);
         postFilledData();
-    };
+
+        console.log("called");
+    },[]);
 
     const deleteBinHandler = async () => {
         const c = window.confirm("Are you sure you want to delete this bin ?");
         if (!c) return;
 
-        const { data, error } = await supabase
+        const { data, error } = await supabase 
             .from("Bins")
             .delete()
             .eq("thingspeak_link", bin.thingspeak_link);
@@ -79,12 +81,15 @@ const BinCards = ({ bin }) => {
             alert("Could not delete bin, please try later.");
             return;
         }
-        
+        setIsRefreshing(false);
         alert("Bin has been successfulyy deleted !");
     };
 
+    // const callAPI = useMemo(() => connectArduino, []);
+
     useEffect(() => {
         connectArduino();
+        // callAPI();
     });
 
     return (
@@ -120,6 +125,9 @@ const BinCards = ({ bin }) => {
                     </li>
                     <li>
                         <p>Description: {bin.description}</p>
+                    </li>
+                    <li>
+                        <p>Bin Height: {bin.height}cm</p>
                     </li>
                     <li>
                         <p>Updated: {updateTime}</p>

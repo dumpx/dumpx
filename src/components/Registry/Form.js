@@ -18,6 +18,7 @@ const Form = () => {
     const [long, setLong] = useState("");
     const [loading, setLoading] = useState(false);
     const [thingspeak, setThingspeak] = useState("");
+    const [height, setHeight] = useState(0);
 
     const createPost = async (e) => {
         e.preventDefault();
@@ -43,6 +44,7 @@ const Form = () => {
                     latitude: lat,
                     longitude: long,
                     thingspeak_link: thingspeak,
+                    height: height,
                 },
             ]);
 
@@ -90,6 +92,18 @@ const Form = () => {
                         placeholder="Enter bin code"
                         onChange={(event) => setBinCode(event.target.value)}
                         value={binCode}
+                    />
+
+                    <label htmlFor="height">Bin Height (cm)</label>
+                    <FormInput
+                        type="number"
+                        min="0"
+                        max="1000"
+                        placeholder="Enter Height in cms"
+                        onChange={(event) => setHeight(event.target.value)}
+                        value={height}
+                        step="any"
+                        required
                     />
 
                     <label htmlFor="bin-location">Location</label>
