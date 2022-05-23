@@ -14,11 +14,13 @@ import {
 } from "./styles";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { login } from "../store/reducers/auth";
 
 const Signup = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isValid, setIsValid] = useState(true);
     const [isSigning, setIsSigning] = useState(false);
 
@@ -53,6 +55,7 @@ const Signup = () => {
         const email = user.email;
         setIsSigning(false);
         alert("You've successfully signed up !");
+        navigate("/dashboard");
         dispatch(login(email));
     };
 

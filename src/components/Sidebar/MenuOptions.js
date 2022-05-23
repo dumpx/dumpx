@@ -9,6 +9,7 @@ const MenuOptions = () => {
         { component: "Home", title: "Dashboard", path: "dashboard" },
         { component: "AccountCircle", title: "Bins", path: `bins` },
         { component: "Input", title: "Register", path: "register" },
+        { component: "Input", title: "Update", path: "update" },
     ];
 
     return (

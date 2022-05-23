@@ -8,6 +8,7 @@ import Home from "../../pages/Home";
 import Error from "../../pages/Error";
 import Register from "../../pages/Register";
 import Bins from "../../pages/Bins";
+import Update from "../../pages/Update";
 
 const Index = () => {
     return (
@@ -19,6 +20,7 @@ const Index = () => {
                     <Route path="/dashboard" element={<Home />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/bins" element={<Bins />} />
+                    <Route path="/update" element={<Update />} />
                     <Route path="/:others" element={<Error />} />
                 </Routes>
             </MainContainer>

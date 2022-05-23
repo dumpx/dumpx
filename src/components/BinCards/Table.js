@@ -23,11 +23,11 @@ const Table = ({
                 </tr>
                 <tr>
                     <td>Latitude</td>
-                    <td>{latitude}</td>
+                    <td>{latitude}N</td>
                 </tr>
                 <tr>
                     <td>Longitude</td>
-                    <td>{longitude}</td>
+                    <td>{longitude}E</td>
                 </tr>
                 <tr>
                     <td>Description</td>

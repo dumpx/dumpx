@@ -13,44 +13,23 @@ import BinVisualBox from "./BinVisualBox";
 
 import { supabase } from "../../supabase";
 
+const getUpdateTime = (time) => {
+    const prevDate = new Date(time);
+    const currDate = new Date();
+    const hours = Math.floor((currDate - prevDate) / 36e5);
+    const mins = Math.floor(((currDate - prevDate) / 36e5) * 60 - hours * 60);
+    return `${hours} hours and ${mins} mins ago`;
+};
+
 const BinCards = ({ bin }) => {
-    const [binColor, setBinColor] = useState("#0f0");
-    const [perc, setPerc] = useState(0);
-    const [updateTime, setUpdateTime] = useState("0 hours 0 mins ago");
-    const [binFilled, setBinFilled] = useState(
-        (bin.height - bin.filled).toFixed(1)
-    );
+    const [updateTime, setUpdateTime] = useState(getUpdateTime(bin.updated_at));
+    const [binFilled, setBinFilled] = useState(bin.filled);
     const [isRefreshing, setIsRefreshing] = useState(false);
 
-    const updateBinColor = () => {
-        const prcnt = Math.floor(Math.abs((binFilled / bin.height) * 100));
-        setPerc(prcnt > 100 ? 100 : prcnt);
-        if (perc < 30) {
-            setBinColor("#0f0");
-        } else if (perc < 50) {
-            setBinColor("#2f0");
-        } else if (perc < 75) {
-            setBinColor("#a00");
-        } else {
-            setBinColor("#f00");
-        }
-    };
-
-    const getUpdateTime = (time) => {
-        const prevDate = new Date(time);
-        const currDate = new Date();
-        const hours = Math.floor((currDate - prevDate) / 36e5);
-        const mins = Math.floor(
-            ((currDate - prevDate) / 36e5) * 60 - hours * 60
-        );
-
-        setUpdateTime(`${hours} hours and ${mins} mins ago`);
-    };
-
-    const postUpdatedData = async (updatedTime) => {
+    const postUpdatedData = async (updatedFilled, updatedTime) => {
         await supabase
             .from("Bins")
-            .update({ filled: binFilled, updated_at: updatedTime })
+            .update({ filled: updatedFilled, updated_at: updatedTime })
             .eq("thingspeak_link", bin.thingspeak_link);
     };
 
@@ -62,11 +41,10 @@ const BinCards = ({ bin }) => {
         const res = await fetch(bin.thingspeak_link);
         const data = await res.json();
 
-        setBinFilled((bin.height - data.feeds[0].field1).toFixed(1));
-        getUpdateTime(data.feeds[0].created_at);
-        updateBinColor();
+        setBinFilled(data.feeds[0].field1);
+        setUpdateTime(getUpdateTime(data.feeds[0].created_at));
+        postUpdatedData(data.feeds[0].field1, data.feeds[0].created_at);
         setIsRefreshing(false);
-        postUpdatedData(data.feeds[0].created_at);
     };
 
     const deleteBinHandler = async () => {
@@ -85,8 +63,6 @@ const BinCards = ({ bin }) => {
         setIsRefreshing(false);
         alert("Bin has been successfulyy deleted !");
     };
-
-    console.log(perc);
 
     return (
         <Card>
@@ -117,7 +93,7 @@ const BinCards = ({ bin }) => {
                     updated={updateTime}
                 />
 
-                <BinVisualBox color={binColor} height={perc} />
+                <BinVisualBox height={bin.height} lFromArd={binFilled} />
             </CardLeft>
             <CardRight>
                 <Map positions={[[bin.latitude, bin.longitude]]} />
