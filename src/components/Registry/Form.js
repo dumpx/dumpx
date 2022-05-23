@@ -68,6 +68,7 @@ const Form = () => {
         setLat("");
         setLong("");
         setThingspeak("");
+        setHeight("");
     };
 
     const getLocation = () => {

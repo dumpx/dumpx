@@ -1,15 +1,15 @@
 import { React } from "react";
 import { NavLink } from "react-router-dom";
 import { MenuOptionsContainer } from "./styles";
-import './styles.scss';
+import "./styles.scss";
 // import Home from '@mui/icons-material/Home'
 
 const MenuOptions = () => {
     const options = [
-        { component: "Home", title: "Dashboard", path: "dashboard" },
-        { component: "AccountCircle", title: "Bins", path: `bins` },
-        { component: "Input", title: "Register", path: "register" },
-        { component: "Input", title: "Update", path: "update" },
+        { title: "Dashboard", path: "dashboard" },
+        { title: "Register", path: "register" },
+        { title: "Bins", path: "bins" },
+        { title: "Update", path: "update" },
     ];
 
     return (

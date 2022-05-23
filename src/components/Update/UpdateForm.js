@@ -72,6 +72,7 @@ const UpdateForm = ({ bin }) => {
         setLat("");
         setLong("");
         setThingspeak("");
+        setHeight("");
     };
 
     const getLocation = () => {

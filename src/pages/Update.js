@@ -5,6 +5,17 @@ import Table from "../components/Update/Table";
 import UpdateForm from "../components/Update/UpdateForm";
 import { useSelector } from "react-redux";
 
+import EmptyCanvas from "../assets/empty.svg";
+
+const EmptyDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2rem;
+    height: 100%;
+`;
+
 const UpdateContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -17,7 +28,12 @@ const Update = () => {
     const [selectedBin, setSelectedBin] = useState(bins[0]);
 
     if (bins.length === 0) {
-        return <h2>No bins found in database, Maybe try adding some !</h2>;
+        return (
+            <EmptyDiv>
+                <img src={EmptyCanvas} alt="empty" style={{ width: "25%" }} />
+                <p>No bin to uodate ! Try adding some and then come back later.</p>
+            </EmptyDiv>
+        );
     }
 
     return (

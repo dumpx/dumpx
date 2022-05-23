@@ -64,19 +64,6 @@ const Bins = () => {
                     </p>
                 </EmptyDiv>
             )}
-            {/* {!isEmpty && (
-                <>
-                    <label for="gender"> Select you gender</label>
-                    <select name="gender" value={sortManner} onChange={setSortManner}>
-                        <option value="none" selected>
-                            Gender
-                        </option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">other</option>
-                    </select>
-                </>
-            )} */}
             {binsArray.map((bin) => {
                 return <BinCards bin={bin} key={bin.id} />;
             })}
